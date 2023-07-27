@@ -43,8 +43,33 @@ koalaRouter.post('/', (req, res) => {
 })
 
 // PUT
+koalaRouter.put('/updatekoala/:id', (req, res) => {
+  console.log('Req Params:', req.params)
 
+  let koalaID = req.params.id
+  let updateKoala = true
+  let queryParams = [ updateKoala, koalaID ]
+
+  let queryText = `
+  UPDATE "koalas"
+  SET "ready_to_transfer" = $1
+  WHERE "id" = $2
+  `
+
+  console.log('🥰 Connected to /updatekoala')
+
+  // pool.query(queryText, queryParams)
+  .then((response) => {
+    res.sendStatus(200)
+  })
+  .catch((error) => {
+    console.log('🐨 Error on PUT:', error)
+    res.sendStatus(500)
+  })
+})
 
 // DELETE
-
+koalaRouter.delete('/deletekoala/:id', (req, res) =>{
+  
+})
 module.exports = koalaRouter;
