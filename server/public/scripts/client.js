@@ -80,13 +80,13 @@ function render(koalasToAdd) {
       <td>${koala.name}</td>
       <td>${koala.age}</td>
       <td>${koala.gender}</td>
-      <td>${koala.readyForTransfer}</td>
+      <td>${koala.ready_to_transfer}</td>
       <td>${koala.notes}</td>
     </tr>
     `)
 
     newRow.data('id', koala.id);
-
+console.log ('transfer value: ', koala.ready_to_transfer);
         // append koalas to the DOM
     $('#viewKoalas').append(newRow)
   }
