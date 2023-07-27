@@ -59,8 +59,35 @@ function getKoalas(){
   })
   .then(response => {
     let allKoalas = response;
-    console.log('response: ', response)
+    console.log('response: ', allKoalas)
 
-
+    // call render with allKoalas array
+    render(allKoalas)
   })
 } // end getKoalas
+
+// render koala array to the DOM
+function render(koalasToAdd) {
+  // clear existing table
+  $('#viewKoalas').empty();
+
+  for (let koala of koalasToAdd) {
+    console.log('inside for loop', koala)
+
+    // adding invisible id to our row that is appended to the DOM, so we can use it later 
+  let newRow = $(`
+    <tr>
+      <td>${koala.name}</td>
+      <td>${koala.age}</td>
+      <td>${koala.gender}</td>
+      <td>${koala.readyForTransfer}</td>
+      <td>${koala.notes}</td>
+    </tr>
+    `)
+
+    newRow.data('id', koala.id);
+
+        // append koalas to the DOM
+    $('#viewKoalas').append(newRow)
+  }
+}
