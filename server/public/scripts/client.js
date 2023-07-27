@@ -90,4 +90,5 @@ function render(koalasToAdd) {
         // append koalas to the DOM
     $('#viewKoalas').append(newRow)
   }
+
 }
