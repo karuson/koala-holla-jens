@@ -10,31 +10,84 @@ $( document ).ready( function(){
 }); // end doc ready
 
 function setupClickListeners() {
-  $( '#addButton' ).on( 'click', function(){
-    console.log( 'in addButton on click' );
-    // get user input and put in an object
-    // NOT WORKING YET :(
-    // using a test object
-    let koalaToSend = {
-      name: 'testName',
-      age: 'testName',
-      gender: 'testName',
-      readyForTransfer: 'testName',
-      notes: 'testName',
-    };
-    // call saveKoala with the new obejct
-    saveKoala( koalaToSend );
-  }); 
+  $( '#addButton' ).on( 'click', handleAdd)
 }
+
+function handleAdd() {
+  console.log( 'in addButton on click' );
+// create object to post to server
+  let koalaToSend = {
+    name: $('#nameIn').val(),
+    age: $('#ageIn').val(),
+    gender: $('#genderIn').val(),
+    readyForTransfer: $('#readyForTransferIn').val(),
+    notes: $('#notesIn').val(),
+  };
+
+  console.log('new koala: ', koalaToSend)
+  // call saveKoala with the new obejct
+  saveKoala( koalaToSend );
+
+  // $.ajax.post({
+  //   method: 'POST',
+  //   url: '/newkoala',
+  //   data: newKoala
+  //  })
+}; 
+
+// takes in our koala object and POSTs it on /newkoala pathway
+function saveKoala( newKoala ){
+  console.log( 'in saveKoala', newKoala );
+
+ $.ajax({
+  method: 'POST',
+  url: '/koalas',
+  data: newKoala
+ })
+ .then (response => {
+  getKoalas()
+ })
+}
+
 
 function getKoalas(){
   console.log( 'in getKoalas' );
   // ajax call to server to get koalas
-  
+  $.ajax({
+    method: 'GET', 
+    url: '/koalas'
+  })
+  .then(response => {
+    let allKoalas = response;
+    console.log('response: ', allKoalas)
+
+    // call render with allKoalas array
+    render(allKoalas)
+  })
 } // end getKoalas
 
-function saveKoala( newKoala ){
-  console.log( 'in saveKoala', newKoala );
-  // ajax call to server to get koalas
- 
+// render koala array to the DOM
+function render(koalasToAdd) {
+  // clear existing table
+  $('#viewKoalas').empty();
+
+  for (let koala of koalasToAdd) {
+    console.log('inside for loop', koala)
+
+    // adding invisible id to our row that is appended to the DOM, so we can use it later 
+  let newRow = $(`
+    <tr>
+      <td>${koala.name}</td>
+      <td>${koala.age}</td>
+      <td>${koala.gender}</td>
+      <td>${koala.readyForTransfer}</td>
+      <td>${koala.notes}</td>
+    </tr>
+    `)
+
+    newRow.data('id', koala.id);
+
+        // append koalas to the DOM
+    $('#viewKoalas').append(newRow)
+  }
 }
