@@ -14,7 +14,7 @@ function setupClickListeners() {
   $('#viewKoalas').on('click', '.transferBtn', handleTransfer)
 }
 
-function handleTransfer(koalaID, ready_to_transfer) {
+function handleTransfer(koalaID) {
   console.log('in transfer')
 
   koalaID = $(this).closest('tr').data('id')
@@ -22,9 +22,6 @@ function handleTransfer(koalaID, ready_to_transfer) {
   $.ajax({
     method: 'PUT',
     url: '/koala/updatekoala/${koalaID}',
-    data: {
-      ready_to_transfer: true
-    }
   }) 
   .then(response => {
 
