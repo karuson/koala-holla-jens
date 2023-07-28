@@ -58,7 +58,7 @@ koalaRouter.put('/updatekoala/:id', (req, res) => {
 
   console.log('🥰 Connected to /updatekoala')
 
-  // pool.query(queryText, queryParams)
+  pool.query(queryText, queryParams)
   .then((response) => {
     res.sendStatus(200)
   })
@@ -70,6 +70,7 @@ koalaRouter.put('/updatekoala/:id', (req, res) => {
 
 // DELETE
 koalaRouter.delete('/deletekoala/:id', (req, res) =>{
-  
+  console.log("in delete")
 })
+
 module.exports = koalaRouter;
