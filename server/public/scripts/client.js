@@ -20,6 +20,7 @@ function handleTransfer(koalaID) {
   koalaID = $(this).closest('tr').data('id')
   console.log('koalaID', koalaID)
 
+  // Put to update the transfer button
   $.ajax({
     method: 'PUT',
     url: `/koalas/updatekoala/${koalaID}`,
@@ -107,6 +108,10 @@ function render(koalasToAdd) {
     newRow.data('id', koala.id);
     console.log ('transfer value: ', koala.ready_to_transfer);
         // append koalas to the DOM
+    if (koala.ready_to_transfer == true) {
+      $('.transferBtn').remove()
+    }
+    
     $('#viewKoalas').append(newRow)
   }
 
