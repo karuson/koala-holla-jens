@@ -11,7 +11,25 @@ $( document ).ready( function(){
 
 function setupClickListeners() {
   $( '#addButton' ).on( 'click', handleAdd)
+  $('#viewKoalas').on('click', '.transferBtn', handleTransfer)
 }
+
+function handleTransfer(koalaID) {
+  console.log('in transfer')
+
+  koalaID = $(this).closest('tr').data('id')
+  console.log('koalaID', koalaID)
+
+  // Put to update the transfer button
+  $.ajax({
+    method: 'PUT',
+    url: `/koalas/updatekoala/${koalaID}`,
+  }) 
+  .then(response => {
+    getKoalas()
+  })
+}
+
 
 function handleAdd() {
   console.log( 'in addButton on click' );
@@ -20,7 +38,7 @@ function handleAdd() {
     name: $('#nameIn').val(),
     age: $('#ageIn').val(),
     gender: $('#genderIn').val(),
-    readyForTransfer: $('#readyForTransferIn').val(),
+    ready_to_transfer: $('#readyForTransferIn').val(),
     notes: $('#notesIn').val(),
   };
 
@@ -81,13 +99,19 @@ function render(koalasToAdd) {
       <td>${koala.age}</td>
       <td>${koala.gender}</td>
       <td>${koala.ready_to_transfer}</td>
+      <td><button class="transferBtn">Mark Ready</button></td> 
       <td>${koala.notes}</td>
+
     </tr>
     `)
 
     newRow.data('id', koala.id);
-console.log ('transfer value: ', koala.ready_to_transfer);
+    console.log ('transfer value: ', koala.ready_to_transfer);
         // append koalas to the DOM
+    if (koala.ready_to_transfer == true) {
+      $('.transferBtn').remove()
+    }
+    
     $('#viewKoalas').append(newRow)
   }
 
