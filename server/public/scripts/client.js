@@ -18,18 +18,15 @@ function handleTransfer(koalaID) {
   console.log('in transfer')
 
   koalaID = $(this).closest('tr').data('id')
+  console.log('koalaID', koalaID)
 
   $.ajax({
     method: 'PUT',
-    url: '/koala/updatekoala/${koalaID}',
+    url: `/koalas/updatekoala/${koalaID}`,
   }) 
   .then(response => {
     getKoalas()
   })
-  .catch(response => {
-    response.sendStatus(400)
-  })
-
 }
 
 
