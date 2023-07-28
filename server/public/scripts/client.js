@@ -24,9 +24,12 @@ function handleTransfer(koalaID) {
     url: '/koala/updatekoala/${koalaID}',
   }) 
   .then(response => {
-
     getKoalas()
   })
+  .catch(response => {
+    response.sendStatus(400)
+  })
+
 }
 
 
