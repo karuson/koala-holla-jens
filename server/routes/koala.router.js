@@ -35,6 +35,7 @@ koalaRouter.post('/', (req, res) => {
   ])
   .then(result => {
     res.sendStatus(201)
+    console.log('ready to transfer: ', newKoala.ready_to_transfer)
   })
   .catch(error => {
     console.log('Error adding 🐨', error)
